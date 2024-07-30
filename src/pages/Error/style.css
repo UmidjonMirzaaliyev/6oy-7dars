@@ -1,0 +1,9 @@
+.error-container {
+  text-align: center;
+  padding: 50px;
+  border: 1px solid #f00;
+  border-radius: 10px;
+  background-color: #fee;
+  margin: 20px auto;
+  max-width: 600px;
+}

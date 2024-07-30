@@ -1,44 +1,31 @@
-import React, { useState, useEffect } from "react";
+// Home.js
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "./style.css";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
-  const [category, setCategory] = useState("");
 
   useEffect(() => {
     fetch("https://cars-pagination.onrender.com/products")
       .then((response) => response.json())
-      .then((data) => setProducts(data.products));
+      .then((data) => setProducts(data))
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  const handleCategoryChange = (e) => {
-    const selectedCategory = e.target.value;
-    setCategory(selectedCategory);
-    fetch(
-      `https://cars-pagination.onrender.com/products/category?category=${selectedCategory}`
-    )
-      .then((response) => response.json())
-      .then((data) => setProducts(data.products));
-  };
-
   return (
-    <div>
-      <h1>Product List</h1>
-      <select onChange={handleCategoryChange}>
-        <option value="">All Categories</option>
-        <option value="средний">Средний</option>
-        <option value="высокий">Высокий</option>
-        <option value="низкий">Низкий</option>
-      </select>
-      <div className="product-list">
-        {products.map((product) => (
+    <div className="home-container">
+      {products.length === 0 ? (
+        <p>Loading...</p>
+      ) : (
+        products.map((product) => (
           <div key={product.id} className="product-card">
             <h2>{product.name}</h2>
             <p>{product.description}</p>
-            <Link to={`/details/${product.id}`}>More Details</Link>
+            <Link to={`/details/${product.id}`}>View Details</Link>
           </div>
-        ))}
-      </div>
+        ))
+      )}
     </div>
   );
 };

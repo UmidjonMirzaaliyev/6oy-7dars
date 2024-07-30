@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "./style.css.css";
 
 const Details = () => {
   const { id } = useParams();
@@ -8,19 +9,20 @@ const Details = () => {
   useEffect(() => {
     fetch(`https://cars-pagination.onrender.com/products/${id}`)
       .then((response) => response.json())
-      .then((data) => setProduct(data));
+      .then((data) => setProduct(data))
+      .catch((error) => console.error("Error fetching data:", error));
   }, [id]);
 
   if (!product) {
-    return <div>Loading...</div>;
+    return <p>Loading...</p>;
   }
 
   return (
-    <div>
+    <div className="details-container">
       <h1>{product.name}</h1>
       <p>{product.description}</p>
       <p>Price: {product.price}</p>
-      <p>Category: {product.category}</p>
+      {/* Other product details */}
     </div>
   );
 };
